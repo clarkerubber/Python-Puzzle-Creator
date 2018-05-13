@@ -6,11 +6,8 @@ This is a python application dedicated to creating chess puzzles locally for you
 
 ## Installation
 
-This script requires the *Requests* and *Python-Chess* libraries to run, as well as a copy of *Stockfish*
+This script requires the *Python-Chess* library to run, as well as a copy of *Stockfish*
 
-### Install Requests
-
-`pip install requests`
 
 ### Install Python Chess
 
