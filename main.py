@@ -51,6 +51,9 @@ with open(settings.pgn) as pgn:
     while True:
         game = chess.pgn.read_game(pgn)
 
+        if game is None:
+            break
+
         node = game
 
         game_id = game.headers["Site"].split('/')[-1:][0]
