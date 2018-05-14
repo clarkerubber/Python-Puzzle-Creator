@@ -29,7 +29,8 @@ from modules.bcolors.bcolors import bcolors
 #     return StringIO(response.text)
 
 def post_puzzle(puzzle):
-    logging.info(bcolors.OKBLUE + str(puzzle.to_dict()) + bcolors.ENDC)
+    puzzle_string = str(puzzle.to_dict()).replace("'",'"')
+    logging.info(bcolors.OKBLUE + puzzle_string + bcolors.ENDC)
     with open('generated-puzzles','a+') as f:
-        f.write(str(puzzle.to_dict()))
+        f.write(puzzle_string)
         f.write("\n\n")
