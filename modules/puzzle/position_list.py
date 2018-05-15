@@ -73,19 +73,22 @@ class position_list:
             return False
 
     def evaluate_legals(self, nodes=6000000):
-        logging.debug(bcolors.OKGREEN + "Evaluating Legal Moves..." + bcolors.ENDC)
-        for i in self.position.legal_moves:
-            position_copy = self.position.copy()
-            position_copy.push(i)
-            self.engine.position(position_copy)
-            self.engine.go(nodes=nodes)
-            self.analysed_legals.append(analysed(i, self.info_handler.info["score"][1]))
-        self.analysed_legals = sorted(self.analysed_legals, key=methodcaller('sort_val'))
-        for i in self.analysed_legals[:3]:
+        logging.debug(bcolors.OKGREEN + "Evaluating Best Two Legal Moves..." + bcolors.ENDC)
+        self.engine.setoption({"MultiPV": 2})
+        self.engine.position(self.position)
+        self.engine.go(nodes=nodes)
+        move1 = self.engine.info_handlers[0].info["pv"].get(1)[0]
+        score1 = self.engine.info_handlers[0].info["score"].get(1)
+        self.analysed_legals.append(analysed(move1, score1))
+        move2 = self.engine.info_handlers[0].info["pv"].get(2)[0]
+        score2 = self.engine.info_handlers[0].info["score"].get(2)
+        self.analysed_legals.append(analysed(move2, score2))
+
+        for i in self.analysed_legals:
             logging.debug(bcolors.OKGREEN + "Move: " + str(i.move.uci()) + bcolors.ENDC)
             logging.debug(bcolors.OKBLUE + "   CP: " + str(i.evaluation.cp))
             logging.debug("   Mate: " + str(i.evaluation.mate))
-        logging.debug("... and " + str(max(0, len(self.analysed_legals) - 3)) + " more moves" + bcolors.ENDC)
+        self.engine.setoption({"MultiPV": 1})
 
     def material_difference(self):
         return sum(v * (len(self.position.pieces(pt, True)) - len(self.position.pieces(pt, False))) for v, pt in zip([0,3,3,5.5,9], chess.PIECE_TYPES))
