@@ -21,7 +21,5 @@ MacOS / Linux : `sh build-stockfish.sh` to obtain the current lichess Stockfish 
 
 `python main.py <filepath to pgn> <#Threads = 4> <Hash (MBytes) = 2048> --quiet`
 
-If your system has systemd, you can use the service file provided, it is tuned for a local virtualenv in a dedicated user account. If you run it as root with system-wide pip packages, use `ExecStart=/usr/bin/python main.py --quiet $key $instance $threads`
-
 JSON puzzle output will be in the file `generated-puzzles` in the `Python-Puzzle-Creator` directory
 
