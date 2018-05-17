@@ -37,9 +37,9 @@ class puzzle:
     def generate(self):
         self.positions.generate()
         if self.is_complete():
-            logging.debug(bcolors.OKGREEN + "Puzzle is complete" + bcolors.ENDC)
+            logging.info(bcolors.OKGREEN + "Puzzle is complete" + bcolors.ENDC)
         else:
-            logging.debug(bcolors.FAIL + "Puzzle incomplete" + bcolors.ENDC)
+            logging.info(bcolors.FAIL + "Puzzle incomplete" + bcolors.ENDC)
 
     def category(self):
         return self.positions.category()
